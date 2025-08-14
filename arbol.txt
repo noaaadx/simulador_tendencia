@@ -1,0 +1,24 @@
+simulador_tendencia/
+│
+├── data/                  # Datos descargados y procesados
+│   ├── raw/               # Datos originales sin procesar
+│   └── processed/         # Datos listos para análisis
+│
+├── indicators/            # Módulos para indicadores
+│   ├── sma.py
+│   ├── ema.py
+│   ├── rsi.py
+│   ├── macd.py
+│   └── bollinger.py
+│
+├── utils/                 # Funciones auxiliares
+│   ├── data_loader.py     # Descargar datos
+│   ├── plotter.py         # Graficar resultados
+│   └── backtest.py        # Simulación de señales
+│
+├── tests/                 # Para pruebas
+│   └── test_indicators.py
+│
+├── main.py                # Script principal para correr todo
+├── requirements.txt       # Lista de dependencias
+└── README.md              # Documentación básica del proyecto
