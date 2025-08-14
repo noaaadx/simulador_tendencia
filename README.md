@@ -1,5 +1,3 @@
-# simulador_tendencia
-
 # Simulador de Tendencia Histórica + Técnica
 
 ## Descripción
