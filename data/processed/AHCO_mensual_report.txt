@@ -1,0 +1,25 @@
+--- Análisis Histórico ---
+Tendencia general en el período: bajista. Cambio total: -16.61% (desde 2025-02 hasta 2025-08).
+
+No se detectaron cruces alcistas de SMA/EMA.
+Cruces bajistas de SMA/EMA (señal de venta potencial): 2025-06.
+
+No se detectaron períodos de sobrecompra (RSI > 70).
+Períodos de sobreventa (RSI < 30, posible recuperación alcista): 2025-05, 2025-06.
+
+No se detectaron cruces alcistas de MACD.
+No se detectaron cruces bajistas de MACD.
+
+No se detectaron toques a la banda superior de Bollinger.
+No se detectaron toques a la banda inferior de Bollinger.
+
+
+
+--- Simulación de Señales ---
+Simulación de señales en el período:
+Número de operaciones: 2
+Operaciones ganadoras: 2
+Retorno hipotético total: 5.93%
+
+Señales de compra: 2025-05, 2025-06
+Señales de venta: 
