@@ -22,11 +22,15 @@ def main():
         print(f"[ERROR] Intervalo inválido. Use uno de: {', '.join(valid_intervals)}")
         return
     
-    df = download_data(ticker, period, interval="1d")
+    interval_map = {"diario": "1d", "mensual": "1mo", "bimestral": "2mo"}
+    df = download_data(ticker, period, interval=interval_map[interval])
     
     if df.empty:
         print(f"[ERROR] No se encontraron datos para el ticker {ticker}")
         return
+    
+    # Asegurar que el índice sea datetime con tz=UTC
+    df.index = pd.to_datetime(df.index, utc=True)
     
     print(f"[DEBUG] Columnas del DataFrame original: {df.columns.tolist()}")
     
@@ -54,13 +58,13 @@ def main():
     
     price_col = "Adj Close" if "Adj Close" in df.columns else "Close"
     
-    sma_period = 3 if interval in ["mensual", "bimestral"] else 20
-    ema_period = 3 if interval in ["mensual", "bimestral"] else 20
-    rsi_period = 3 if interval in ["mensual", "bimestral"] else 14
-    macd_fast = 2 if interval in ["mensual", "bimestral"] else 12
-    macd_slow = 4 if interval in ["mensual", "bimestral"] else 26
-    macd_signal = 1 if interval in ["mensual", "bimestral"] else 9
-    bollinger_period = 3 if interval in ["mensual", "bimestral"] else 20
+    sma_period = 20 if interval == "diario" else 3
+    ema_period = 20 if interval == "diario" else 3
+    rsi_period = 14 if interval == "diario" else 3
+    macd_fast = 12 if interval == "diario" else 3
+    macd_slow = 26 if interval == "diario" else 6
+    macd_signal = 9 if interval == "diario" else 2
+    bollinger_period = 20 if interval == "diario" else 5
     
     df[f"SMA_{sma_period}"] = calcular_sma(df, sma_period, price_col=price_col)
     df[f"EMA_{ema_period}"] = calcular_ema(df, ema_period, price_col=price_col)

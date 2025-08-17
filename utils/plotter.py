@@ -1,166 +1,119 @@
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+import seaborn as sns
 import pandas as pd
+from pandas.plotting import register_matplotlib_converters
+
+# Registrar convertidores 
+register_matplotlib_converters()
 
 def plot_indicators(df, ticker, price_col="Close"):
     """
-    Grafica SMA, EMA, RSI, MACD y Bollinger Bands en dos figuras separadas, con señales de compra/venta.
+    Genera dos figuras: una con precio, SMA, EMA, Bollinger y detalles numéricos; otra con RSI y MACD.
     """
-    plt.style.use("seaborn-darkgrid")
+    # Asegurar que el índice sea datetime con tz
+    df = df.copy()
+    df.index = pd.to_datetime(df.index, utc=True)
 
-    # Verificar si hay suficientes datos para graficar
-    if len(df) < 3:
-        print(f"[ADVERTENCIA] El DataFrame tiene solo {len(df)} filas, algunos indicadores pueden no mostrarse correctamente.")
+    sns.set(style="whitegrid")
     
-    # Figura 1: Precio + SMA/EMA y Bollinger Bands
-    fig1, axes1 = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
-    for ax in axes1:
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
-        ax.xaxis.set_major_locator(mdates.MonthLocator())
-        ax.grid(True, linestyle='--', alpha=0.7)
-
-    # Subgráfico 1: Precio + SMA + EMA + Señales
-    axes1[0].plot(df.index, df[price_col], label="Precio Cierre", color="blue", linewidth=1.5)
+    # Filtrar señales únicas por mes
+    if 'Signal' in df.columns:
+        df['YearMonth'] = df.index.strftime('%Y-%m')
+        buy_signals = df[df['Signal'] == 1].groupby('YearMonth').first()
+        sell_signals = df[df['Signal'] == -1].groupby('YearMonth').first()
+        df = df.drop(columns=['YearMonth'])
+    
+    # Primera figura: Precio, SMA, EMA, Bollinger
+    fig1, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    
+    # Precio, SMA, EMA
+    ax1.plot(df.index, df[price_col], label='Precio', color='blue')
     sma_col = next((col for col in df.columns if col.startswith("SMA_")), None)
     ema_col = next((col for col in df.columns if col.startswith("EMA_")), None)
-    if sma_col and df[sma_col].notna().any():
-        axes1[0].plot(df.index, df[sma_col], label=sma_col, color="orange", linewidth=1)
-    if ema_col and df[ema_col].notna().any():
-        axes1[0].plot(df.index, df[ema_col], label=ema_col, color="green", linewidth=1)
+    if sma_col:
+        ax1.plot(df.index, df[sma_col], label=sma_col, color='orange')
+    if ema_col:
+        ax1.plot(df.index, df[ema_col], label=ema_col, color='green')
     
-    # Marcar señales de compra/venta
+    # Señales de compra/venta con precios
     if 'Signal' in df.columns:
-        buy_signals = df[df['Signal'] == 1]
-        sell_signals = df[df['Signal'] == -1]
-        axes1[0].plot(buy_signals.index, buy_signals[price_col], '^', markersize=10, color='green', label='Compra')
-        axes1[0].plot(sell_signals.index, sell_signals[price_col], 'v', markersize=10, color='red', label='Venta')
+        for idx, row in buy_signals.iterrows():
+            ax1.plot(idx, row[price_col], '^', markersize=10, color='green', label='Compra' if idx == buy_signals.index[0] else "")
+            ax1.annotate(f"${row[price_col]:.2f}", (idx, row[price_col]), xytext=(0, 10), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        for idx, row in sell_signals.iterrows():
+            ax1.plot(idx, row[price_col], 'v', markersize=10, color='red', label='Venta' if idx == sell_signals.index[0] else "")
+            ax1.annotate(f"${row[price_col]:.2f}", (idx, row[price_col]), xytext=(0, -15), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
     
-    # Etiquetas para máximo y mínimo precio
-    valid_prices = df[price_col].dropna()
-    if not valid_prices.empty:
-        max_price_idx = valid_prices.idxmax()
-        min_price_idx = valid_prices.idxmin()
-        axes1[0].annotate(f'Máx: ${valid_prices[max_price_idx]:.2f}', 
-                          xy=(max_price_idx, valid_prices[max_price_idx]), 
-                          xytext=(10, 10), textcoords='offset points', 
-                          color='red', fontsize=10, weight='bold',
-                          bbox=dict(facecolor='white', alpha=0.8))
-        axes1[0].annotate(f'Mín: ${valid_prices[min_price_idx]:.2f}', 
-                          xy=(min_price_idx, valid_prices[min_price_idx]), 
-                          xytext=(10, -20), textcoords='offset points', 
-                          color='green', fontsize=10, weight='bold',
-                          bbox=dict(facecolor='white', alpha=0.8))
+    # Máximos y mínimos
+    max_price = df[price_col].max()
+    min_price = df[price_col].min()
+    max_idx = df[price_col].idxmax()
+    min_idx = df[price_col].idxmin()
+    ax1.axhline(max_price, color='red', linestyle='--', alpha=0.5, label=f'Máximo: ${max_price:.2f}')
+    ax1.axhline(min_price, color='green', linestyle='--', alpha=0.5, label=f'Mínimo: ${min_price:.2f}')
+    ax1.annotate(f"${max_price:.2f}", (max_idx, max_price), xytext=(10, 10), textcoords='offset points', color='red', fontsize=8, weight='bold', bbox=dict(facecolor='white', alpha=0.8))
+    ax1.annotate(f"${min_price:.2f}", (min_idx, min_price), xytext=(10, -20), textcoords='offset points', color='green', fontsize=8, weight='bold', bbox=dict(facecolor='white', alpha=0.8))
     
-    axes1[0].set_title(f"{ticker} - Precio y Medias")
-    axes1[0].set_ylabel("Precio ($)")
-    axes1[0].legend()
-
-    # Subgráfico 2: Bollinger Bands
-    if "Bollinger_Upper" in df.columns and "Bollinger_Lower" in df.columns and df["Bollinger_Upper"].notna().any():
-        axes1[1].plot(df.index, df[price_col], label="Precio Cierre", color="blue")
-        axes1[1].plot(df.index, df["Bollinger_Upper"], label="Banda Superior", color="red", linestyle="--")
-        axes1[1].plot(df.index, df["Bollinger_Lower"], label="Banda Inferior", color="green", linestyle="--")
-        
-        # Etiquetas para las bandas en el último punto válido
-        last_valid_idx = df["Bollinger_Upper"].last_valid_index()
-        if last_valid_idx:
-            last_upper = df["Bollinger_Upper"].loc[last_valid_idx]
-            last_lower = df["Bollinger_Lower"].loc[last_valid_idx]
-            axes1[1].annotate(f'Sup: ${last_upper:.2f}', 
-                              xy=(last_valid_idx, last_upper), 
-                              xytext=(10, 10), textcoords='offset points', 
-                              color='red', fontsize=10, weight='bold',
-                              bbox=dict(facecolor='white', alpha=0.8))
-            axes1[1].annotate(f'Inf: ${last_lower:.2f}', 
-                              xy=(last_valid_idx, last_lower), 
-                              xytext=(10, -20), textcoords='offset points', 
-                              color='green', fontsize=10, weight='bold',
-                              bbox=dict(facecolor='white', alpha=0.8))
-        
-        axes1[1].set_title("Bollinger Bands")
-        axes1[1].set_ylabel("Precio ($)")
-        axes1[1].legend()
-    else:
-        axes1[1].text(0.5, 0.5, "Datos insuficientes para Bollinger Bands", 
-                      horizontalalignment='center', verticalalignment='center', 
-                      fontsize=12, color='red')
-        axes1[1].set_title("Bollinger Bands")
-        axes1[1].set_ylabel("Precio ($)")
-
-    fig1.tight_layout()
-    plt.setp(axes1[-1].get_xticklabels(), rotation=45)
-    fig1.suptitle(f"{ticker} - Análisis de Precio", fontsize=16, y=1.02)
-
-    # Figura 2: RSI y MACD
-    fig2, axes2 = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
-    for ax in axes2:
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
-        ax.xaxis.set_major_locator(mdates.MonthLocator())
-        ax.grid(True, linestyle='--', alpha=0.7)
-
-    # Subgráfico 1: RSI
+    # Precio de cierre
+    last_close = df[price_col].iloc[-1]
+    ax1.set_title(f'{ticker} - Precio, SMA, EMA (Cierre: ${last_close:.2f})')
+    ax1.set_ylabel('Precio')
+    ax1.legend()
+    
+    # Bandas de Bollinger
+    if 'Bollinger_Upper' in df.columns and 'Bollinger_Lower' in df.columns:
+        ax2.plot(df.index, df['Bollinger_Upper'], label='Banda Superior', color='purple', linestyle='--')
+        ax2.plot(df.index, df[price_col], label='Precio', color='blue')
+        ax2.plot(df.index, df['Bollinger_Lower'], label='Banda Inferior', color='purple', linestyle='--')
+        ax2.fill_between(df.index, df['Bollinger_Upper'], df['Bollinger_Lower'], color='purple', alpha=0.1)
+        # Etiquetas en toques a bandas
+        touch_upper = df[df[price_col] > df['Bollinger_Upper']]
+        touch_lower = df[df[price_col] < df['Bollinger_Lower']]
+        for idx, row in touch_upper.iterrows():
+            ax2.annotate(f"${row[price_col]:.2f}", (idx, row[price_col]), xytext=(0, 10), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        for idx, row in touch_lower.iterrows():
+            ax2.annotate(f"${row[price_col]:.2f}", (idx, row[price_col]), xytext=(0, -15), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+    ax2.set_title('Bandas de Bollinger')
+    ax2.set_ylabel('Precio')
+    ax2.legend()
+    
+    plt.tight_layout()
+    
+    # Segunda figura: RSI y MACD
+    fig2, (ax3, ax4) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    
+    # RSI
     rsi_col = next((col for col in df.columns if col.startswith("RSI_")), None)
-    if rsi_col and df[rsi_col].notna().any():
-        axes2[0].plot(df.index, df[rsi_col], label=rsi_col, color="purple")
-        axes2[0].axhline(70, color="red", linestyle="--", label="Sobrecompra (70)")
-        axes2[0].axhline(30, color="green", linestyle="--", label="Sobreventa (30)")
-        
-        # Etiqueta para el último valor válido de RSI
-        last_valid_rsi_idx = df[rsi_col].last_valid_index()
-        if last_valid_rsi_idx:
-            last_rsi = df[rsi_col].loc[last_valid_rsi_idx]
-            axes2[0].annotate(f'RSI: {last_rsi:.2f}', 
-                              xy=(last_valid_rsi_idx, last_rsi), 
-                              xytext=(10, 0), textcoords='offset points', 
-                              color='purple', fontsize=10, weight='bold',
-                              bbox=dict(facecolor='white', alpha=0.8))
-        
-        axes2[0].set_title("RSI")
-        axes2[0].set_ylabel("RSI")
-        axes2[0].legend()
-    else:
-        axes2[0].text(0.5, 0.5, "Datos insuficientes para RSI", 
-                      horizontalalignment='center', verticalalignment='center', 
-                      fontsize=12, color='red')
-        axes2[0].set_title("RSI")
-        axes2[0].set_ylabel("RSI")
-
-    # Subgráfico 2: MACD
-    if "MACD" in df.columns and "MACD_signal" in df.columns and df["MACD"].notna().any():
-        axes2[1].plot(df.index, df["MACD"], label="MACD", color="blue")
-        axes2[1].plot(df.index, df["MACD_signal"], label="Señal", color="red")
-        axes2[1].bar(df.index, df["MACD_hist"], label="Histograma", color="gray", alpha=0.3)
-        
-        # Etiqueta para el último valor válido de MACD
-        last_valid_macd_idx = df["MACD"].last_valid_index()
-        if last_valid_macd_idx:
-            last_macd = df["MACD"].loc[last_valid_macd_idx]
-            axes2[1].annotate(f'MACD: {last_macd:.2f}', 
-                              xy=(last_valid_macd_idx, last_macd), 
-                              xytext=(10, 0), textcoords='offset points', 
-                              color='blue', fontsize=10, weight='bold',
-                              bbox=dict(facecolor='white', alpha=0.8))
-        
-        axes2[1].set_title("MACD")
-        axes2[1].set_ylabel("MACD")
-        axes2[1].legend()
-    else:
-        axes2[1].text(0.5, 0.5, "Datos insuficientes para MACD", 
-                      horizontalalignment='center', verticalalignment='center', 
-                      fontsize=12, color='red')
-        axes2[1].set_title("MACD")
-        axes2[1].set_ylabel("MACD")
-
-    fig2.tight_layout()
-    plt.setp(axes2[-1].get_xticklabels(), rotation=45)
-    fig2.suptitle(f"{ticker} - Indicadores Técnicos", fontsize=16, y=1.02)
-
-    # Mostrar ambas figuras
+    if rsi_col:
+        ax3.plot(df.index, df[rsi_col], label=rsi_col, color='blue')
+        ax3.axhline(70, color='red', linestyle='--', label='Sobrecompra (70)')
+        ax3.axhline(30, color='green', linestyle='--', label='Sobreventa (30)')
+        # Etiquetas en sobrecompra/sobreventa
+        overbought = df[df[rsi_col] > 70]
+        oversold = df[df[rsi_col] < 30]
+        for idx, row in overbought.iterrows():
+            ax3.annotate(f"{row[rsi_col]:.2f}", (idx, row[rsi_col]), xytext=(0, 10), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        for idx, row in oversold.iterrows():
+            ax3.annotate(f"{row[rsi_col]:.2f}", (idx, row[rsi_col]), xytext=(0, -15), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        ax3.set_title(f'{ticker} - RSI')
+        ax3.set_ylabel('RSI')
+        ax3.legend()
+    
+    # MACD
+    if 'MACD' in df.columns and 'MACD_signal' in df.columns:
+        ax4.plot(df.index, df['MACD'], label='MACD', color='blue')
+        ax4.plot(df.index, df['MACD_signal'], label='Señal', color='orange')
+        ax4.bar(df.index, df['MACD_hist'], label='Histograma', color='gray')
+        # Etiquetas en cruces MACD
+        bullish_macd = df[(df['MACD'].shift(1) < df['MACD_signal'].shift(1)) & (df['MACD'] > df['MACD_signal'])]
+        bearish_macd = df[(df['MACD'].shift(1) > df['MACD_signal'].shift(1)) & (df['MACD'] < df['MACD_signal'])]
+        for idx, row in bullish_macd.iterrows():
+            ax4.annotate(f"{row['MACD']:.2f}", (idx, row['MACD']), xytext=(0, 10), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        for idx, row in bearish_macd.iterrows():
+            ax4.annotate(f"{row['MACD']:.2f}", (idx, row['MACD']), xytext=(0, -15), textcoords='offset points', ha='center', fontsize=8, bbox=dict(facecolor='white', alpha=0.8))
+        ax4.set_title('MACD')
+        ax4.set_ylabel('MACD')
+        ax4.legend()
+    
+    plt.tight_layout()
     plt.show()
-
-    # Mostrar tabla de valores clave
-    print("\nTabla de valores clave:")
-    key_dates = df.index[::len(df)//3] if len(df) > 3 else df.index  # Mostrar ~3 fechas representativas
-    table_columns = [col for col in [price_col, sma_col, ema_col, rsi_col, "MACD", "Bollinger_Upper", "Bollinger_Lower"] if col and col in df.columns]
-    table_data = df.loc[key_dates, table_columns].dropna(how='all')
-    print(table_data.to_string())

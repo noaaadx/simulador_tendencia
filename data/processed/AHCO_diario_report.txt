@@ -1,0 +1,31 @@
+--- Análisis Histórico ---
+Tendencia general en el período: alcista. Cambio total: 5.16% (desde mayo-2025 hasta agosto-2025).
+Precio inicial: $9.02, Precio final: $9.48
+
+Días con volumen alto (>1.5x promedio): junio-2025, junio-2025 a junio-2025, julio-2025, agosto-2025, agosto-2025 (Volumen: 4103000, 4365700, 1906300).
+
+Períodos con precio > SMA (tendencia alcista): junio-2025, junio-2025, junio-2025 a junio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025 (28 días).
+Períodos con precio < SMA (tendencia bajista): junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, julio-2025, julio-2025, julio-2025, julio-2025 a julio-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025 (16 días).
+Cruces alcistas de SMA/EMA (señal de compra potencial): julio-2025 (SMA=9.16, EMA=9.15).
+Cruces bajistas de SMA/EMA (señal de venta potencial): junio-2025 (SMA=8.78, EMA=8.81), agosto-2025 (SMA=9.30, EMA=9.33).
+
+Períodos de sobrecompra (RSI > 70, posible corrección bajista): julio-2025 (RSI: 71.16).
+Períodos de sobreventa (RSI < 30, posible recuperación alcista): junio-2025, junio-2025, junio-2025, junio-2025, junio-2025 (RSI: 24.63, 27.02, 28.63, ...).
+
+Cruces alcistas de MACD (señal de momentum alcista): mayo-2025 (MACD=0.02, Signal=0.00), mayo-2025 (MACD=0.01, Signal=0.00), junio-2025 (MACD=-0.09, Signal=-0.10), ....
+Cruces bajistas de MACD (señal de momentum bajista): mayo-2025 (MACD=-0.02, Signal=0.00), mayo-2025 (MACD=0.00, Signal=0.00), julio-2025 (MACD=0.08, Signal=0.10), ....
+
+Toques a banda superior de Bollinger (potencial corrección bajista): junio-2025 (Precio=9.42), junio-2025 (Precio=9.55), agosto-2025 (Precio=10.11).
+Toques a banda inferior de Bollinger (potencial recuperación alcista): agosto-2025 (Precio=8.75).
+
+
+
+--- Simulación de Señales ---
+Simulación de señales en el período:
+Número de operaciones: 5
+Operaciones ganadoras: 2
+Retorno hipotético total: 15.09%
+Máximo drawdown: 0.00%
+
+Señales de compra: agosto-2025 (1 días).
+Señales de venta: agosto-2025, junio-2025 (4 días).
