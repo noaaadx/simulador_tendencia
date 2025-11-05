@@ -1,0 +1,106 @@
+--- Análisis Histórico ---
+Tendencia general en el período: alcista. Cambio total: 59.47% (desde octubre-2024 hasta septiembre-2025).
+Precio inicial: $117.00, Precio final: $186.58
+
+Días con volumen alto (>1.5x promedio): octubre-2024, octubre-2024, noviembre-2024, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025 a enero-2025, febrero-2025, febrero-2025 a febrero-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, mayo-2025 (Volumen: 346250200, 377831000, 400946600).
+
+Períodos con precio > SMA (tendencia alcista): octubre-2024, octubre-2024, octubre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, marzo-2025, marzo-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025 a abril-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025, junio-2025 a junio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025 a julio-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025 a septiembre-2025 (144 días).
+Períodos con precio < SMA (tendencia bajista): octubre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, noviembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024, diciembre-2024 a diciembre-2024, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025, enero-2025 a enero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025, febrero-2025 a febrero-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025, marzo-2025 a marzo-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, abril-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, agosto-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025, septiembre-2025 (87 días).
+Cruces alcistas de SMA/EMA (señal de compra potencial): octubre-2024 (SMA=136.04, EMA=135.56), enero-2025 (SMA=137.78, EMA=137.57), enero-2025 (SMA=138.29, EMA=137.60), ....
+Cruces bajistas de SMA/EMA (señal de venta potencial): enero-2025 (SMA=137.05, EMA=137.14), enero-2025 (SMA=139.23, EMA=139.30), febrero-2025 (SMA=130.82, EMA=130.88), ....
+
+Períodos de sobrecompra (RSI > 70, posible corrección bajista): octubre-2024, octubre-2024, octubre-2024, octubre-2024, febrero-2025, febrero-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, mayo-2025, junio-2025, junio-2025, junio-2025, junio-2025 a junio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025, julio-2025 a julio-2025, agosto-2025 (RSI: 83.26, 82.20, 71.73, ...).
+Períodos de sobreventa (RSI < 30, posible recuperación alcista): marzo-2025, marzo-2025, marzo-2025, marzo-2025, abril-2025, abril-2025, abril-2025, abril-2025, septiembre-2025, septiembre-2025, septiembre-2025 (RSI: 29.41, 27.67, 24.57, ...).
+
+Cruces alcistas de MACD (señal de momentum alcista): noviembre-2024 (MACD=4.27, Signal=4.21), diciembre-2024 (MACD=-1.15, Signal=-1.30), enero-2025 (MACD=-0.28, Signal=-0.31), ....
+Cruces bajistas de MACD (señal de momentum bajista): octubre-2024 (MACD=5.11, Signal=5.32), noviembre-2024 (MACD=4.00, Signal=4.35), enero-2025 (MACD=0.01, Signal=0.16), ....
+
+Toques a banda superior de Bollinger (potencial corrección bajista): noviembre-2024 (Precio=148.88), enero-2025 (Precio=149.43), mayo-2025 (Precio=129.93), ....
+Toques a banda inferior de Bollinger (potencial recuperación alcista): enero-2025 (Precio=118.42), marzo-2025 (Precio=110.57), abril-2025 (Precio=101.80), ....
+
+
+
+--- Simulación Normal ---
+=== Simulación Original (SMA/EMA) ===
+Número de operaciones cerradas: 2
+Operaciones ganadoras: 2
+Retorno total: 4.09%
+Máx. drawdown global: 0.53%
+
+Detalle de operaciones:
+  1. enero-2025 → enero-2025: 4.54%
+  2. junio-2025 → junio-2025: 11.71%
+
+--- Simulación Avanzada ---
+=== Simulación Avanzada (SMA+EMA+MACD+RSI+Bollinger) ===
+Número de operaciones cerradas: 21
+Operaciones ganadoras: 12
+Winrate: 57.14%
+Retorno total: -1.78%
+CAGR: -1.79%
+Sharpe ratio: -0.38
+Profit factor: 0.58
+Máx. drawdown global: 3.90%
+
+Detalle de operaciones:
+  1. noviembre-2024 → noviembre-2024: -4.63%
+  2. noviembre-2024 → noviembre-2024: -3.83%
+  3. noviembre-2024 → noviembre-2024: -2.26%
+  4. noviembre-2024 → noviembre-2024: -4.26%
+  5. noviembre-2024 → noviembre-2024: -2.93%
+  6. noviembre-2024 → noviembre-2024: -3.26%
+  7. diciembre-2024 → enero-2025: 0.60%
+  8. diciembre-2024 → enero-2025: 2.99%
+  9. enero-2025 → enero-2025: 4.54%
+  10. enero-2025 → enero-2025: 0.10%
+  11. febrero-2025 → febrero-2025: 1.29%
+  12. marzo-2025 → marzo-2025: 0.86%
+  13. abril-2025 → abril-2025: -6.87%
+  14. junio-2025 → junio-2025: 1.14%
+  15. junio-2025 → junio-2025: 0.64%
+  16. junio-2025 → junio-2025: 2.03%
+  17. junio-2025 → junio-2025: 0.78%
+  18. junio-2025 → junio-2025: 0.14%
+  19. junio-2025 → junio-2025: -0.78%
+  20. septiembre-2025 → septiembre-2025: -4.20%
+  21. septiembre-2025 → septiembre-2025: 3.93%
+
+--- Resultados Backtest Estrategias ---
+=== TrendFollowingStrategy ===
+Número de operaciones cerradas: 2
+Operaciones ganadoras: 1
+Winrate: 50.00%
+Retorno total: -0.30%
+CAGR: -0.30%
+Sharpe ratio: -0.03
+Profit factor: 0.96
+Máx. drawdown global: 5.26%
+
+Detalle de operaciones:
+  1. enero-2025 → enero-2025: -15.91%
+  2. junio-2025 → julio-2025: 15.34%
+
+=== SwingStrategy ===
+Número de operaciones cerradas: 0
+Operaciones ganadoras: 0
+Winrate: 0.00%
+Retorno total: 0.00%
+CAGR: 0.00%
+Sharpe ratio: 0.00
+Profit factor: 0.00
+Máx. drawdown global: 0.00%
+
+
+=== ContrarianStrategy ===
+Número de operaciones cerradas: 1
+Operaciones ganadoras: 0
+Winrate: 0.00%
+Retorno total: -1.84%
+CAGR: -1.85%
+Sharpe ratio: -1.01
+Profit factor: 0.00
+Máx. drawdown global: 1.84%
+
+Detalle de operaciones:
+  1. abril-2025 → abril-2025: -7.36%
+

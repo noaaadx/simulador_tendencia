@@ -1,0 +1,31 @@
+--- Análisis Histórico ---
+Tendencia general en el período: alcista. Cambio total: 56.08% (desde abril-2025 hasta septiembre-2025).
+Precio inicial: $282.16, Precio final: $440.40
+
+No se detectaron días con volumen alto.
+
+Períodos con precio > SMA (tendencia alcista): agosto-2025 a septiembre-2025 (2 días).
+No se detectaron períodos con precio < SMA (tendencia bajista).
+No se detectaron cruces alcistas de SMA/EMA.
+Cruces bajistas de SMA/EMA (señal de venta potencial): septiembre-2025 (SMA=349.33, EMA=358.01).
+
+Períodos de sobrecompra (RSI > 70, posible corrección bajista): septiembre-2025 (RSI: 83.72).
+No se detectaron períodos de sobreventa (RSI < 30).
+
+No se detectaron cruces alcistas de MACD.
+No se detectaron cruces bajistas de MACD.
+
+No se detectaron toques a la banda superior de Bollinger.
+No se detectaron toques a la banda inferior de Bollinger.
+
+
+
+--- Simulación de Señales ---
+Simulación de señales en el período:
+Número de operaciones: 1
+Operaciones ganadoras: 1
+Retorno hipotético total: 56.08%
+Máximo drawdown: 0.00%
+
+Señales de compra: abril-2025 (1 días).
+Señales de venta: septiembre-2025 (1 días).

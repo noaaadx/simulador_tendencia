@@ -1,3 +1,4 @@
+# main.py
 from utils.data_loader import download_data
 from indicators.sma import calcular_sma
 from indicators.ema import calcular_ema
@@ -6,7 +7,9 @@ from indicators.macd import calculate_macd
 from indicators.bollinger import calculate_bollinger
 from utils.plotter import plot_indicators
 from utils.analysis import generate_historical_analysis
-from utils.backtest import simulate_signals
+from utils.strategies import run_backtest
+from utils.simulation import run_basic_simulation, run_advanced_simulation  # <-- nuevas funciones
+
 import pandas as pd
 import os
 
@@ -29,17 +32,11 @@ def main():
         print(f"[ERROR] No se encontraron datos para el ticker {ticker}")
         return
     
-    # Asegurar que el índice sea datetime con tz=UTC
     df.index = pd.to_datetime(df.index, utc=True)
-    
-    print(f"[DEBUG] Columnas del DataFrame original: {df.columns.tolist()}")
     
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = [col[0] for col in df.columns]
-    
     df.columns = [col.capitalize() for col in df.columns]
-    
-    print(f"[DEBUG] Columnas normalizadas: {df.columns.tolist()}")
     
     if interval in ["mensual", "bimestral"]:
         resample_rule = 'M' if interval == "mensual" else '2M'
@@ -48,49 +45,71 @@ def main():
             print(f"[ERROR] No se encontraron columnas válidas en el DataFrame: {df.columns.tolist()}")
             return
         agg_dict = {col: 'last' for col in available_columns}
-        agg_dict.update({
-            'Open': 'first',
-            'High': 'max',
-            'Low': 'min',
-            'Volume': 'sum'
-        })
+        agg_dict.update({'Open': 'first', 'High': 'max', 'Low': 'min', 'Volume': 'sum'})
         df = df[available_columns].resample(resample_rule).agg(agg_dict).dropna(how='all')
     
     price_col = "Adj Close" if "Adj Close" in df.columns else "Close"
     
-    sma_period = 20 if interval == "diario" else 3
-    ema_period = 20 if interval == "diario" else 3
-    rsi_period = 14 if interval == "diario" else 3
-    macd_fast = 12 if interval == "diario" else 3
-    macd_slow = 26 if interval == "diario" else 6
-    macd_signal = 9 if interval == "diario" else 2
-    bollinger_period = 20 if interval == "diario" else 5
+    # Configuración de indicadores
+    sma_period = 20 if interval == "diario" else 5
+    ema_period = 20 if interval == "diario" else 5
+    rsi_period = 14 if interval == "diario" else 5
+    macd_fast, macd_slow, macd_signal = (12, 26, 9) if interval == "diario" else (5, 10, 5)
+    bollinger_period = 20 if interval == "diario" else 3
     
+    # Calcular indicadores
     df[f"SMA_{sma_period}"] = calcular_sma(df, sma_period, price_col=price_col)
     df[f"EMA_{ema_period}"] = calcular_ema(df, ema_period, price_col=price_col)
     df = calculate_rsi(df, period=rsi_period, price_col=price_col)
     df = calculate_macd(df, price_col=price_col, fast=macd_fast, slow=macd_slow, signal=macd_signal)
     df = calculate_bollinger(df, period=bollinger_period, price_col=price_col, num_std=2)
     
+    # --- 1️⃣ Análisis histórico ---
     analysis_report = generate_historical_analysis(df)
     print("\n--- Análisis Histórico ---")
     print(analysis_report)
     
-    simulation_report = simulate_signals(df)
+    # --- 2️⃣ Simulación normal ---
     print("\n--- Simulación de Señales ---")
-    print(simulation_report)
+    basic_report = run_basic_simulation(df)
+    print(basic_report)
     
-    report_path = os.path.join("data", "processed", f"{ticker}_{interval}_report.txt")
-    with open(report_path, 'w', encoding='utf-8') as f:
-        f.write("--- Análisis Histórico ---\n" + analysis_report + "\n\n--- Simulación de Señales ---\n" + simulation_report)
-    print(f"Reporte guardado en: {report_path}")
+    # --- 3️⃣ Simulación avanzada ---
+    print("\n=== Simulación Avanzada (SMA+EMA+MACD+RSI+Bollinger) ===")
+    advanced_report = run_advanced_simulation(df)
+    print(advanced_report)
     
+    # --- 4️⃣ Estrategias ---
+    indicator_cols = {
+        'sma_col': f"SMA_{sma_period}",
+        'ema_col': f"EMA_{ema_period}",
+        'rsi_col': f"RSI_{rsi_period}",
+        'macd_col': 'MACD',
+        'macd_signal_col': 'MACD_signal',
+        'bollinger_upper_col': 'Bollinger_Upper',
+        'bollinger_lower_col': 'Bollinger_Lower'
+    }
+    strategy_reports = run_backtest(df, indicator_cols)
+    print("\n--- Resultados Backtest Estrategias ---")
+    for name, report in strategy_reports.items():
+        print(report)
+    
+    # --- Guardar reportes ---
     processed_path = os.path.join("data", "processed")
     os.makedirs(processed_path, exist_ok=True)
     
+    report_path = os.path.join(processed_path, f"{ticker}_{interval}_report.txt")
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write("--- Análisis Histórico ---\n" + analysis_report + "\n\n")
+        f.write("--- Simulación Normal ---\n" + basic_report + "\n\n")
+        f.write("--- Simulación Avanzada ---\n" + advanced_report + "\n\n")
+        f.write("--- Resultados Backtest Estrategias ---\n")
+        for name, report in strategy_reports.items():
+            f.write(report + "\n\n")
+    print(f"Reporte guardado en: {report_path}")
+    
     output_file = os.path.join(processed_path, f"{ticker}_{interval}_processed.csv")
-    df_with_date = df.reset_index()
-    df_with_date.to_csv(output_file, index=False)
+    df.reset_index().to_csv(output_file, index=False)
     
     print(f"\nPrimeras filas con indicadores ({interval}):")
     print(df.head())
